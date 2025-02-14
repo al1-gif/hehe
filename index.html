@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>do a little favour for me XD</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Great Vibes', cursive;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      background-image: url('https://i.imgur.com/mE1rNFP.png');
+      background-size: cover;
+      background-position: center;
+      transition: all 1s;
+      cursor: none;
+    }
+    h1, p {
+      font-size: 2.5rem;
+      color: #ff0066;
+      text-align: center;
+    }
+    img {
+      width: 160px;
+      height: auto;
+      margin-bottom: 20px;
+      position: absolute;
+      top: 120px;
+      left: 50%; 
+      transform: translateX(-50%);
+    }
+    button {
+      font-size: 1.5rem;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      margin: 10px;
+      font-family: Arial, sans-serif;
+      position: relative;
+    }
+    #yes-btn {
+      background-color: #ff66b2;
+      color: white;
+    }
+    #no-btn {
+      background-color: #cccccc;
+      color: black;
+      position: absolute;
+    }
+    #message-slide {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+    }
+    video {
+      width: 90%;
+      max-width: 700px;
+      border-radius: 10px;
+    }
+    #love-message {
+      font-size: 2rem;
+      color: #ff0066;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .cursor {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      background-image: url('https://i.imgur.com/XFyWGBC.png'); 
+      background-size: cover;
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+      z-index: 9999;
+    }
+    /* Heart and sparkle animations */
+    .heart, .sparkle {
+      position: absolute;
+      animation-duration: 2s;
+      animation-timing-function: ease-in-out;
+      pointer-events: none;
+    }
+    .heart {
+      font-size: 24px;
+      color: red;
+      animation-name: heartAnimation;
+      opacity: 0;
+    }
+    .sparkle {
+      font-size: 20px;
+      color: #ffccff;
+      animation-name: sparkleAnimation;
+      opacity: 0;
+    }
+
+    @keyframes heartAnimation {
+      0% {
+        transform: translateY(0) scale(0.5);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100px) scale(1.5);
+        opacity: 0;
+      }
+    }
+    @keyframes sparkleAnimation {
+      0% {
+        transform: translateY(0) scale(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-50px) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* New image below the message */
+    #second-image {
+      width: 400px;
+      height: auto;
+      margin-bottom: 20px;
+      position: relative;
+      top: 0px;
+      left: 50%; 
+      transform: translateX(-50%);
+    }
+
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+  <div id="valentine-slide">
+    <img src="https://i.imgur.com/UG6TsqK.png" alt="Valentine Image">
+    <h1>Bby, I order one kiss voice please <3</h1>
+    <button id="yes-btn">Okeyyyyy😽</button>
+    <button id="no-btn">No😾</button>
+  </div>
+
+  <div id="message-slide">
+    <p>Reallyyyyy😳!!!!! yeyyyyyy</p>
+    <!-- New image below the message -->
+    <img id="second-image" src="https://i.imgur.com/mUzwtR3.jpeg" alt="Second Image">
+  </div>
+
+  <div class="cursor" id="custom-cursor"></div>
+
+  <!-- Audio Element -->
+  <audio id="valentine-audio" loop>
+  <source src="https://drive.google.com/uc?export=download&id=1rGDAsq61d1tNbWAn7q3_zSbNIrQGvBsN" type="audio/mp3">
+  Your browser does not support the audio element.
+</audio>
+
+  <script>
+    const noBtn = document.getElementById('no-btn');
+    const yesBtn = document.getElementById('yes-btn');
+    const valentineSlide = document.getElementById('valentine-slide');
+    const messageSlide = document.getElementById('message-slide');
+    const happyVideo = document.getElementById('happy-video');
+    const customCursor = document.getElementById('custom-cursor');
+    const valentineAudio = document.getElementById('valentine-audio');
+    
+    // Function to generate heart and sparkle animations
+    function generateHeartAndSparkle() {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+      heart.innerHTML = '❤️';
+      heart.style.left = `${Math.random() * window.innerWidth}px`;
+      heart.style.top = `${Math.random() * window.innerHeight}px`;
+      document.body.appendChild(heart);
+
+      const sparkle = document.createElement('div');
+      sparkle.classList.add('sparkle');
+      sparkle.innerHTML = '✨';
+      sparkle.style.left = `${Math.random() * window.innerWidth}px`;
+      sparkle.style.top = `${Math.random() * window.innerHeight}px`;
+      document.body.appendChild(sparkle);
+
+      setTimeout(() => {
+        heart.remove();
+        sparkle.remove();
+      }, 2000); // Remove after animation
+    }
+
+    // Trigger heart and sparkle every 0.5 seconds
+    setInterval(generateHeartAndSparkle, 500);
+
+    noBtn.addEventListener('mouseover', () => {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20; 
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+    });
+
+    yesBtn.addEventListener('click', () => {
+      valentineSlide.style.display = 'none';
+      messageSlide.style.display = 'flex';
+      confetti({
+        particleCount: 1000,
+        spread: 360,
+        origin: { y: 0.5 },
+        zIndex: 9999
+      });
+      happyVideo.play();
+      happyVideo.muted = false; 
+      valentineAudio.play(); // Start audio on click
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      customCursor.style.left = `${e.pageX}px`;
+      customCursor.style.top = `${e.pageY}px`;
+    });
+  </script>
+</body>
+</html>
